@@ -103,62 +103,37 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({"main.js":[function(require,module,exports) {
-//创建节点
-var div = dom.create('<div id="d1">createDiv</div>');
-console.log(div);
-//新增弟弟
-console.log(dom.after(test2, div));
-console.log(dom.before(test2, div));
-console.log(dom.append(test2, div));
-//新增父亲
-var div2 = dom.create('<div id="parent"></div');
-dom.wrap(test, div2);
-
-var div3 = dom.empty(window.empty);
-console.log(div3);
-
-dom.attr(test, 'title', 'hello,world!');
-var title = dom.attr(test, 'title');
-console.log('title: ' + title);
-
-dom.text(test, '你好，这是新的内容');
-//获取
-dom.text(test);
-
-dom.style(test, { border: '1px solid red', color: 'blue' });
-dom.style(test, 'border');
-dom.style(test, 'border', '1px solid black');
-
-dom.class.add(test, 'red');
-dom.class.add(test2, 'blue');
-dom.class.remove(test2, 'blue');
-console.log(dom.class.has(test2, 'blue'));
-console.log(dom.class.has(test, 'red'));
-
-var fn = function fn() {
-    console.log('点击了');
+})({"dom-demo.js":[function(require,module,exports) {
+window.dom = {
+    find: function find(selector) {
+        return document.querySelectorAll(selector);
+    },
+    style: function style(node, object) {
+        for (var key in object) {
+            node.style[key] = object[key];
+        }
+    },
+    each: function each(nodeList, fn) {
+        for (var i = 0; i < nodeList.length; i++) {
+            fn.call(null, nodeList[i]);
+        }
+    },
+    on: function on(node, eventName, fn) {
+        node.addEventListener(eventName, fn);
+    }
 };
-dom.on(test, 'click', fn);
-dom.off(test, 'click', fn);
 
-console.log(dom.find('#test')[0]);
-console.log(dom.find('.red', test2)[0]);
+var div = dom.find('#test>.red')[0]; // 获取对应的元素
+dom.style(div, { color: 'red' }); // 设置 div.style.color
 
-console.log(dom.parent(test));
-console.log(dom.children(test2));
-
-var s2 = dom.find('#test2')[0];
-console.log(dom.siblings(s2));
-console.log(dom.next(s2));
-console.log(dom.previous(s2));
-
-var t = dom.find('#test2')[0];
-dom.each(dom.children(t), function (n) {
-    return dom.style(n, 'color', 'red');
-});
-
-console.log(dom.index(s2));
+var divList = dom.find('.red'); // 获取多个 div.red 元素
+dom.each(divList, function (n) {
+    return console.log(n);
+}); // 遍历 divList 里的所有元素
+var fn = function fn() {
+    console.log("点击了");
+};
+dom.on(test, 'click', fn); //添加监听事件
 },{}],"..\\..\\..\\..\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\parcel\\src\\builtins\\hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -329,5 +304,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},["..\\..\\..\\..\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\parcel\\src\\builtins\\hmr-runtime.js","main.js"], null)
-//# sourceMappingURL=/main.addb4541.map
+},{}]},{},["..\\..\\..\\..\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\parcel\\src\\builtins\\hmr-runtime.js","dom-demo.js"], null)
+//# sourceMappingURL=/dom-demo.1032b90e.map
